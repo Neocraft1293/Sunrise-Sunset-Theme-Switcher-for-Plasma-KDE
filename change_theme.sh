@@ -48,10 +48,12 @@ if [[ "$current_time" > "$sunrise" && "$current_time" < "$sunset" ]]; then
     sun_status="le soleil est actuellement levé"
     next_event_time="$sunset"
     next_event="coucher"
+    plasma-apply-colorscheme BreezeClassic
 else
     sun_status="le soleil est actuellement couché"
     next_event_time="$sunrise"
     next_event="lever"
+    plasma-apply-colorscheme BreezeDark
 fi
 
 # Calculer la date et l'heure du prochain lever ou coucher de soleil
