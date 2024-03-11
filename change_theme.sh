@@ -67,8 +67,41 @@ echo "Actuellement, $sun_status."
 echo "Prochain événement : $next_event du soleil à $next_event_time."
 echo "Planification de l'exécution du script pour le prochain $next_event du soleil..."
 
-# Planifier l'exécution du script pour le prochain lever ou coucher de soleil
-at -t "$next_event_datetime" <<EOF
-"$0"
-EOF
-echo "le chemin du script est $0"
+
+#attendre un temp random entre 1 et une minute
+
+#gener un nombbre random entre 1 et 60
+random_number=$((1 + RANDOM % 60))
+random_number=0
+echo "le script va attendre $random_number secondes avant de programmer la prochaine execution"
+sleep $random_number
+
+
+#c'est pour eviter que le script ne s'execute pas en meme temps au cas ou il y a plusieur fois le script qui s'execute en meme temps
+#et surtout pour eviter que le script ne programme plusieur fois la meme tache
+
+# Vérifier si une tâche avec le nom "change_theme" existe déjà
+existing_task=$(atq | grep -F 'change_theme' | cut -f1)
+
+# Déterminer le répertoire du script
+script_dir=$(dirname "$0")
+mark_file="$script_dir/fichier_de_log" # Créer un fichier de log pour marquer la prochaine exécution du script
+# met le contenue du fichier dans une variable
+mark_file_content=$(cat "$mark_file")
+#echo $mark_file_content
+echo "mark_file_content : $mark_file_content"
+
+#if mark_file_content = next_event_datetime
+if [ "$mark_file_content" = "$next_event_datetime" ]; then
+    echo "La prochaine exécution du script est déjà planifiée pour le prochain event."
+    else
+    echo "La prochaine exécution du script n'est pas encore planifiée."
+    echo $next_event_datetime > $mark_file
+    echo "La prochaine exécution du script est planifiée pour le prochain event."
+    at -t "$next_event_datetime" -f "$0"
+fi
+
+
+echo "next_event_datetime : $next_event_datetime"
+
+#at -t "$next_event_datetime" -f "$0"
