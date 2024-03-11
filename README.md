@@ -39,4 +39,4 @@ Aucune configuration requise. Le script récupère automatiquement l'adresse IP 
 
 ## Licence
 
-Ce projet est sous licence [CC BY-SA 4.0](LICENSE). Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est sous licence [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode). Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
