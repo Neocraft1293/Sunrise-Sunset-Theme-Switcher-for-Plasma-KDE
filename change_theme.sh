@@ -72,7 +72,6 @@ echo "Planification de l'exécution du script pour le prochain $next_event du so
 
 #gener un nombbre random entre 1 et 60
 random_number=$((1 + RANDOM % 60))
-random_number=0
 echo "le script va attendre $random_number secondes avant de programmer la prochaine execution"
 sleep $random_number
 
