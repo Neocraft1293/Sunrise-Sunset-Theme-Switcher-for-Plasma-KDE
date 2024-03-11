@@ -31,7 +31,8 @@ L'API sunrise-sunset.org fournit des informations précises sur les heures de le
 
 1. Clonez ce dépôt sur votre système local.
 2. Assurez-vous que le script est exécutable : `chmod +x sunrise_sunset_theme_switcher.sh`.
-3. Exécutez le script : `./sunrise_sunset_theme_switcher.sh`.
+3. Copiez le script dans le répertoire de votre choix : `cp sunrise_sunset_theme_switcher.sh /chemin/vers/votre/destination`
+4. Exécutez le script en utilisant le chemin vers le script : `/chemin/vers/le/script/sunrise_sunset_theme_switcher.sh` 
 
 ## Configuration
 
