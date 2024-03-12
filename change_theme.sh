@@ -20,10 +20,19 @@ if [ -z "$location_info" ]; then
     echo "Impossible de récupérer les informations de localisation pour l'adresse IP $public_ip."
     exit 1
 fi
-
+echo "location_info : $location_info"
 # Extraire les coordonnées de latitude et de longitude
 latitude=$(echo "$location_info" | jq -r '.loc' | cut -d ',' -f1)
 longitude=$(echo "$location_info" | jq -r '.loc' | cut -d ',' -f2)
+#extraire la ville
+city=$(echo "$location_info" | jq -r '.city')
+postal=$(echo "$location_info" | jq -r '.postal')
+region=$(echo "$location_info" | jq -r '.region')
+country=$(echo "$location_info" | jq -r '.country')
+timezone=$(echo "$location_info" | jq -r '.timezone')
+echo "vous etes a $city $postal $region $country et votre fuseau horaire est $timezone"
+org=$(echo "$location_info" | jq -r '.org')
+echo "votre fournisseur d'acces est $org"
 
 # Vérifier si les coordonnées de latitude et de longitude sont obtenues avec succès
 if [ -z "$latitude" ] || [ -z "$longitude" ]; then
