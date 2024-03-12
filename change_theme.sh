@@ -87,6 +87,10 @@ echo "Planification de l'exécution du script pour le prochain $next_event du so
 
 #attendre un temp random entre 1 et une minute
 
+
+
+
+
 #gener un nombbre random entre 1 et 60
 random_number=$((1 + RANDOM % 60))
 echo "le script va attendre $random_number secondes avant de programmer la prochaine execution"
@@ -106,6 +110,27 @@ mark_file="$script_dir/fichier_de_log" # Créer un fichier de log pour marquer l
 mark_file_content=$(cat "$mark_file")
 #echo $mark_file_content
 echo "mark_file_content : $mark_file_content"
+
+
+#recuperer le resultat de la commande atq
+atq=$(echo $(atq))
+echo "atq : $atq"
+#si le resultat de la commande atq est vide alors on programme le script
+if [ -z "$atq" ]; then #si le resultat de la commande atq est vide alors on programme le script
+    echo "il n'y a pas de tache programmée"
+    #programmer le script
+    at -t "$next_event_datetime" -f "$0"
+    #enregistre dans le fichier de log la date et l'heure de la prochaine execution
+    echo $next_event_datetime > $mark_file
+    else
+    echo "il y a une tache programmée"
+fi
+
+
+#reattendre un temp random entre 1 et une minute
+random_number=$((1 + RANDOM % 60))
+echo "le script va attendre $random_number secondes avant de programmer la prochaine execution"
+sleep $random_numbers
 
 #if mark_file_content = next_event_datetime
 if [ "$mark_file_content" = "$next_event_datetime" ]; then
