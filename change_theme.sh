@@ -54,8 +54,9 @@ sunset=$(echo "$sunrise_sunset_info" | jq -r '.results.sunset')
 # Convertir les heures de l'API Sunrise-Sunset au format 24 heures
 sunrise_24=$(date -d "$sunrise" +"%H:%M")
 sunset_24=$(date -d "$sunset" +"%H:%M")
-current_time_24=$(date +"%H:%M")
-echo "current_time_24 : $current_time_24"
+#recuperer l'heure actuelle par rapport au fuseau horaire $timezone
+current_time_24=$(TZ=$timezone date +"%H:%M")
+echo "heure actuelle : $current_time_24"
 # Comparer les heures au format 24 heures
 if [[ "$current_time_24" > "$sunrise_24" && "$current_time_24" < "$sunset_24" ]]; then
     sun_status="le soleil est actuellement levé"
