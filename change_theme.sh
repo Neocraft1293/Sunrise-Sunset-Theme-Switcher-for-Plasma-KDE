@@ -20,7 +20,6 @@ if [ -z "$location_info" ]; then
     echo "Impossible de récupérer les informations de localisation pour l'adresse IP $public_ip."
     exit 1
 fi
-echo "location_info : $location_info"
 # Extraire les coordonnées de latitude et de longitude
 latitude=$(echo "$location_info" | jq -r '.loc' | cut -d ',' -f1)
 longitude=$(echo "$location_info" | jq -r '.loc' | cut -d ',' -f2)
