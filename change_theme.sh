@@ -38,23 +38,29 @@ formatted_location="lat=$latitude&lng=$longitude"
 api_url="https://api.sunrise-sunset.org/json?$formatted_location"
 sunrise_sunset_info=$(curl -s "$api_url")
 
+
 # Extraire l'heure du lever et du coucher du soleil de la réponse de l'API
 sunrise=$(echo "$sunrise_sunset_info" | jq -r '.results.sunrise')
 sunset=$(echo "$sunrise_sunset_info" | jq -r '.results.sunset')
 
-# Déterminer si le soleil est actuellement levé ou couché
-current_time=$(date +%H:%M)
-if [[ "$current_time" > "$sunrise" && "$current_time" < "$sunset" ]]; then
+# Convertir les heures de l'API Sunrise-Sunset au format 24 heures
+sunrise_24=$(date -d "$sunrise" +"%H:%M")
+sunset_24=$(date -d "$sunset" +"%H:%M")
+current_time_24=$(date +"%H:%M")
+echo "current_time_24 : $current_time_24"
+# Comparer les heures au format 24 heures
+if [[ "$current_time_24" > "$sunrise_24" && "$current_time_24" < "$sunset_24" ]]; then
     sun_status="le soleil est actuellement levé"
-    next_event_time="$sunset"
+    next_event_time="$sunset_24"
     next_event="coucher"
     plasma-apply-colorscheme BreezeClassic
 else
     sun_status="le soleil est actuellement couché"
-    next_event_time="$sunrise"
+    next_event_time="$sunrise_24"
     next_event="lever"
     plasma-apply-colorscheme BreezeDark
 fi
+
 
 # Calculer la date et l'heure du prochain lever ou coucher de soleil
 next_event_datetime=$(date -d "$next_event_time" +"%Y%m%d%H%M")
